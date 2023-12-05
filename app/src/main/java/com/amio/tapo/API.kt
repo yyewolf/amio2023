@@ -48,16 +48,14 @@ class API {
                 donnees=donneeLabel,
             )
             Log.d("API", value.toString())
-            if (value < 220) {
-                continue
-            }
 
-            text += "${data.getString("label")} : ${data.getString("value")} - ${data.getString("mote")} at ${date} \n\n"
+            val state = if (value < 250) "OFF" else "ON"
+
+            text += "${data.getString("mote")}: ${data.getString("value")} (${state})\n\n"
         }
 
-        if (text == "") {
-            return "Aucune lampe n'est allumée"
-        }
+        val m = Mail()
+        m.send("tristan.smagghe@telecomnancy.net", "API", "coucou")
 
         return text
     }
