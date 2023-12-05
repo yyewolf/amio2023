@@ -1,39 +1,57 @@
 package com.amio.tapo
 
 import android.content.Intent
+import android.os.AsyncTask
 import android.util.Log
+import android.widget.Button
 import android.widget.Switch
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.ComponentActivity
+import java.util.concurrent.Executors
 
 class MainActivityBtn {
+    private val api: API = API()
     constructor(a: MainActivity) {
-        val switch1 = a.findViewById<Switch>(R.id.switch1)
-        val textView2 = a.findViewById<TextView>(R.id.textView2)
+        val apiBtn = a.findViewById<Button>(R.id.apiBtn);
+        val resultV = a.findViewById<TextView>(R.id.resultText);
 
-        switch1.isChecked = a.prefs!!.getBoolean("startAtBoot", false)
+        val donnees = Donnees()
 
-        if (switch1.isChecked) {
-            Log.d("MainActivity", "Switch1 pre-checked")
-            textView2.text = "En cours"
-        } else {
-            Log.d("MainActivity", "Switch1 pre-unchecked")
-            textView2.text = "Arrêt"
-        }
+        apiBtn.setOnClickListener {
+            // Send GET to http://iotlab.telecomnancy.eu:8080/iotlab/rest/data/1/light1/last in Executors
 
-        Log.d("MainActivity", "Création du listener Switch1")
+            Log.d("MainActivity", "Bouton API cliqué")
 
-        switch1.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                textView2.text = "En cours"
-                Log.d("MainActivity", "Creation du service")
-                // Start mainService
-                a.startService(Intent(a, MainService::class.java))
-            } else {
-                textView2.text = "Arrêt"
-                Log.d("MainActivity", "Arret du service")
-                a.stopService(Intent(a, MainService::class.java))
+            val tsk = object : AsyncTask<Void, Void, String>() {
+                override fun doInBackground(vararg params: Void?): String {
+                    var result = ""
+                    try {
+                        result = api.getData()
+                    } catch (e: Exception) {
+                        Log.e("MainActivity", "Error: ${e.message}")
+                    }
+                    return result
+                }
+
+                override fun onPostExecute(result: String?) {
+                    super.onPostExecute(result)
+                    if (result == "") {
+                        Log.e("API", "Résultat vide")
+                        Toast.makeText(a, "Je ne suis pas content de la réponse de l'API >:(", Toast.LENGTH_SHORT).show()
+                        return
+                    }
+                    Log.d("API", "Résultat OK")
+                    var diff = api.getDiff()
+                    if (diff.size == 0) {
+                        resultV.text = result
+                    } else {
+                        resultV.text = result + "\n\n" + diff.joinToString("\n")
+                    }
+                }
             }
+
+            tsk.executeOnExecutor(Executors.newSingleThreadExecutor())
         }
     }
 }

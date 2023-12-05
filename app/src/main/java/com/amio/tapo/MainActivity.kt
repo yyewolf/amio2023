@@ -26,6 +26,7 @@ class MainActivity : ComponentActivity() {
         // Create MainActivitySwitch1 to create listener for switch1
         val mainActivitySwitch1 = MainActivitySwitch1(this)
         val mainActivityCheckBox = MainActivityCheckBox(this)
+        val mainActivityButton = MainActivityBtn(this)
     }
 
     override fun onDestroy() {
