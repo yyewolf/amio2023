@@ -34,13 +34,14 @@
         android:layout_margin="15dp"
         android:stretchColumns="0" >
 
-        <TextView
-            android:id="@+id/textTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="40sp"
-            android:text="@string/tapo" />
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textFontWeight="900"
+                android:textSize="40sp"
+                android:text="@string/tapo" />
 
 
     </TableLayout>
@@ -60,6 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
+                android:textFontWeight="700"
                 android:text="@string/service_status" />
 
             <TextView
@@ -79,6 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
+                android:textFontWeight="700"
                 android:text="@string/last_result" />
 
             <TextView
@@ -98,6 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
+                android:textFontWeight="700"
                 android:text="@string/last_alert" />
 
             <TextView
@@ -117,22 +121,22 @@
         android:stretchColumns="0,1" >
 
 
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:onClick="toggleSwitch"
-            android:text="@string/_switch1"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:onClick="toggleSwitch"
+                android:text="@string/_switch1"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-        <Switch
-            android:id="@+id/switch2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="@string/_switch2"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+            <Switch
+                android:id="@+id/switch2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/_switch2"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     </TableLayout>
 
@@ -146,12 +150,12 @@
         android:stretchColumns="0" >
 
 
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="toggleCheckBox"
-            android:text="@string/start_at_boot" />
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="toggleCheckBox"
+                android:text="@string/start_at_boot" />
 
     </TableLayout>
 

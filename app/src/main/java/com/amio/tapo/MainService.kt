@@ -1,6 +1,7 @@
 package com.amio.tapo
 
 import android.Manifest
+import android.app.AppComponentFactory
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,6 +13,7 @@ import android.os.IBinder
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -29,7 +31,9 @@ class MainService : Service() {
             val diff = api.getDiff()
             // Send push notification if diff is not empty and if it is between 18h and 23h
             val isBetween18hAnd23h = (18..23).contains(java.time.LocalDateTime.now().hour)
-            if (diff.isNotEmpty() && isBetween18hAnd23h) {
+            val isWeekend = (java.time.LocalDateTime.now().dayOfWeek.toString() == "SATURDAY" || java.time.LocalDateTime.now().dayOfWeek.toString() == "SUNDAY")
+            val isBetween23hAnd6h = (23..6).contains(java.time.LocalDateTime.now().hour)
+            if (diff.isNotEmpty() && !isWeekend && isBetween18hAnd23h) {
                 for (d in diff) {
                     val notificationChannel = NotificationChannel(
                         "com.amio.tapo",
@@ -48,6 +52,17 @@ class MainService : Service() {
 
                     notificationManager.createNotificationChannel(notificationChannel)
                     notificationManager.notify(counter, builder.build())
+                }
+            }
+
+            if (diff.isNotEmpty() && ((!isWeekend && isBetween23hAnd6h) || (isWeekend && isBetween18hAnd23h))) {
+                val m = Mail()
+                // Get mail from preferences "email"
+                val prefs = getSharedPreferences("com.amio.tapo", AppCompatActivity.MODE_PRIVATE)
+                val email = prefs.getString("email", "")
+                val username = prefs.getString("username", "User")
+                if (email != null) {
+                    m.send(email, "TAPO - Changes detected", "Hello ${username}, here's what happened:\n\n"+diff.joinToString("\n"))
                 }
             }
         }

@@ -54,9 +54,6 @@ class API {
             text += "${data.getString("mote")}: ${data.getString("value")} (${state})\n\n"
         }
 
-        val m = Mail()
-        m.send("tristan.smagghe@telecomnancy.net", "API", "coucou")
-
         return text
     }
 
