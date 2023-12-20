@@ -12,7 +12,7 @@ L'objectif de ce mini-projet est de finaliser une application Android exploitant
 
 
 ## Fonctionnalités
-<img src="/png/home.png" alt="home page" style="max-width: 100%;">
+<img src="/png/home.png" alt="home page" style="height: 50%;">
 - Journalisation de l'ensemble des actions de l'application (utilisation de Log.d).
 - Mise en place d'un service asynchrone périodique de récupération des données du web service (récupération toutes les 30 secondes).
 - Switch permettant de lancer le service depuis l'interface utilisateur
